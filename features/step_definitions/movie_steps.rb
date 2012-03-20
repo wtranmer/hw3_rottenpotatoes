@@ -12,9 +12,11 @@ end
 #   on the same page
 
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
-  #  ensure that that e1 occurs before e2.
-  #  page.content  is the entire content of the page as a string.
-  assert false, "Unimplmemented"
+  ndx1 = page.body.index(e1)
+  ndx2 = page.body.index(e2)
+  assert ndx1 != nil, "#{e1} not found in \n#{page.body}"
+  assert ndx2 != nil, "#{e2} not found in \n#{page.body}"
+  assert ndx1 < ndx2, "#{e1} is not before #{e2} in \n#{page.body}"
 end
 
 # Make it easier to express checking or unchecking several boxes at once
@@ -22,7 +24,18 @@ end
 #  "When I check the following ratings: G"
 
 When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
-  # HINT: use String#split to split up the rating_list, then
-  #   iterate over the ratings and reuse the "When I check..." or
-  #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
+  ratings = rating_list.split(',')
+  ratings.each do |field|
+    step %{I #{uncheck}check "ratings_#{field.strip}"}
+  end
+  click_button("ratings_submit")
 end
+Then /^(?:|I )should see all the movies$/ do 
+  @all_movies = Movie.all
+
+  @all_movies.each do |movie|
+    step %{I should see "#{movie.title}"}
+  end
+
+end
+

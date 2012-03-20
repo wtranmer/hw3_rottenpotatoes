@@ -23,13 +23,25 @@ Background: movies have been added to database
   
 Scenario: restrict to movies with 'PG' or 'R' ratings
   # enter step(s) to check the 'PG' and 'R' checkboxes
+  When I check "ratings_PG"
+  And I check "ratings_R"
   # enter step(s) to uncheck all other checkboxes
+# And I unselect all other from "Rating"
   # enter step to "submit" the search form on the homepage
+  And I press "ratings_submit"
   # enter step(s) to ensure that PG and R movies are visible
+  Then I should be on the RottenPotatoes home page
+  And I should see "The Incredibles"
+  And I should see "Raiders of the Lost Ark"
+  And I should see "The Terminator"
+  And I should see "When Harry Met Sally"
+  And I should see "Amelie"
   # enter step(s) to ensure that other movies are not visible
+ And the "ratings_G" checkbox should not be checked
+ And the "ratings_PG-13" checkbox should not be checked
 
 Scenario: no ratings selected
-  # see assignment
 
 Scenario: all ratings selected
-  # see assignment
+  When I check the following ratings: G, PG, PG-13, R
+  Then I should see all the movies
