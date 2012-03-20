@@ -28,7 +28,6 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   ratings.each do |field|
     step %{I #{uncheck}check "ratings_#{field.strip}"}
   end
-  click_button("ratings_submit")
 end
 Then /^(?:|I )should see all the movies$/ do 
   @all_movies = Movie.all

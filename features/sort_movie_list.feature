@@ -23,10 +23,12 @@ Background: movies have been added to database
 
 Scenario: sort movies alphabetically
   When I check the following ratings: G, PG, PG-13, R
+   And I press "ratings_submit"
    And I follow "Movie Title"
   Then I should see "Aladdin" before "Amelie"
 
 Scenario: sort movies in increasing order of release date
   When I check the following ratings: G, PG, PG-13, R
+   And I press "ratings_submit"
    And I follow "Release Date"
   Then I should see "2000-06-21" before "2004-11-05"
