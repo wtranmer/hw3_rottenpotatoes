@@ -29,4 +29,4 @@ Scenario: sort movies alphabetically
 Scenario: sort movies in increasing order of release date
   When I check the following ratings: G, PG, PG-13, R
    And I follow "Release Date"
-  Then I should see "21-Jun-2000" before "5-Nov-2004"
+  Then I should see "2000-06-21" before "2004-11-05"
